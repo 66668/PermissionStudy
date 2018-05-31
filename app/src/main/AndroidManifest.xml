@@ -1,6 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.sjy.permission">
+    <!--====================================最全权限及解析2018-06-01===========================================-->
+    <!--=========================以字母排序展示 *表示系统使用 ()表示一类 #表示新权限=========================-->
+
+    <!--=========================A(12个)===========================-->
+    <!--01 允许读/写 在checkin数据库中 的properties表-->
+    <uses-permission android:name="android.permission.ACCESS_CHECKIN_PROPERTIES" />
+
+    <!--02 wifi/基站粗略定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!--03(02) 手机GPS芯片定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!--04(02) 允许访问额外的定位提供者指令-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
+    <!--05(02) 开发者 模拟定位(该权限需要写在src/debug/AndroidManifest.xml下)-->
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+
+    <!--06(06) 获取网络信息状态-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!--07# APP通知显示在状态栏 in API level 23 -->
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
+    <!--08 允许程序使用SurfaceFlinger底层特性 eg:全屏手写输入 游戏 图片预览-->
+    <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
+
+    <!--09(06) 获取当前WiFi接入的状态以及WLAN热点的信息-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!--10(06) 获取当前WiFi接入的状态以及WLAN热点的信息-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!--11* 获取账户验证信息，主要为GMail账户信息，只有系统级进程才能访问的权限-->
+    <uses-permission android:name="android.permission.ACCOUNT_MANAGER" />
+
+
+    <!--12(11) 允许一个程序通过账户验证方式访问账户管理ACCOUNT_MANAGER相关信息-->
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+
+    <!--13# 允许该应用接听来电。  in API level 26-->
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
+
+    <!--=========================B===========================-->
+
+    <!--14* 请求accessibilityservice服务，以确保只有系统可以绑定到它-->
+    <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE" />
+
+    <!--15* 请求accessibilityservice服务，以确保只有系统可以绑定到它-->
+    <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE" />
+
+    <!--16* Android Laucher(android桌面UI) 之窗口小部件权限 eg:时间表 音乐窗口 日历-->
+    <uses-permission android:name="android.permission.BIND_APPWIDGET" />
+
+    <!--17*# 必须由AutofillService来确保只有系统可以绑定到它。in API level 26-->
+    <uses-permission android:name="android.permission.BIND_AUTOFILL_SERVICE" />
+
+
+    <!--17* API>23时使用BIND_CARRIER_MESSAGING_SERVICE,API<23时 使用BIND_CARRIER_SERVICES-->
+    <uses-permission android:name="android.permission.BIND_CARRIER_MESSAGING_SERVICE"/>
+
+    <!--18(17)* API<=23时 使用BIND_CARRIER_SERVICES 允许绑定到运营商应用程序中的服务的系统进程将具有此权限。 运营商应用程序应该使用此权限来保护只允许系统绑定的服务-->
+    <uses-permission android:name="android.permission.BIND_CARRIER_SERVICES"/>
+
+    <!--19* 必须由ChooserTargetService要求，确保只有系统可以绑定到它-->
+    <uses-permission android:name="android.permission.BIND_CHOOSER_TARGET_SERVICE"/>
+
+    <!--20* 必须由ConditionProviderService要求，确保只有系统可以绑定到它  added in API level 24-->
+    <uses-permission android:name="android.permission.BIND_CONDITION_PROVIDER_SERVICE"/>
+
+
 
     <application
         android:allowBackup="true"
