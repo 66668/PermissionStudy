@@ -3,25 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.sjy.permission">
     <!--====================================最全权限及解析2018-06-01===========================================-->
-    <!--=========================以字母排序展示 *表示系统使用 ()表示一类 #表示新权限=========================-->
+    <!--说明：以字母排序展示，过时权限将不再展示
 
-    <!--=========================A(12个)===========================-->
+     *：   表示系统级（通常涉及framework,或单独模块）
+     @p:    表示系统级,私有API 程序员不用
+     ()-： 表示一类
+     #：   表示新权限
+     add:  只标注API 21+的最新权限
+     @+ ： 常用权限,且需要动态申请的权限
+     @-:   常用权限，不需要动态申请
+    -->
+
+    <!--=========================A(13个)===========================-->
     <!--01 允许读/写 在checkin数据库中 的properties表-->
     <uses-permission android:name="android.permission.ACCESS_CHECKIN_PROPERTIES" />
 
     <!--02 wifi/基站粗略定位-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <!--03(02) 手机GPS芯片定位-->
+    <!--03()-(02) 手机GPS芯片定位-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <!--04(02) 允许访问额外的定位提供者指令-->
+    <!--04()-(02) 允许访问额外的定位提供者指令-->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
-    <!--05(02) 开发者 模拟定位(该权限需要写在src/debug/AndroidManifest.xml下)-->
+    <!--05()-(02) 开发者 模拟定位(该权限需要写在src/debug/AndroidManifest.xml下)-->
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
 
-    <!--06(06) 获取网络信息状态-->
+    <!--06()-(06) 获取网络信息状态-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!--07# APP通知显示在状态栏 in API level 23 -->
@@ -30,23 +39,23 @@
     <!--08 允许程序使用SurfaceFlinger底层特性 eg:全屏手写输入 游戏 图片预览-->
     <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
 
-    <!--09(06) 获取当前WiFi接入的状态以及WLAN热点的信息-->
+    <!--09()-(06) 获取当前WiFi接入的状态以及WLAN热点的信息-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <!--10(06) 获取当前WiFi接入的状态以及WLAN热点的信息-->
+    <!--10()-(06) 获取当前WiFi接入的状态以及WLAN热点的信息-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <!--11* 获取账户验证信息，主要为GMail账户信息，只有系统级进程才能访问的权限-->
     <uses-permission android:name="android.permission.ACCOUNT_MANAGER" />
 
 
-    <!--12(11) 允许一个程序通过账户验证方式访问账户管理ACCOUNT_MANAGER相关信息-->
+    <!--12()-(11) 允许一个程序通过账户验证方式访问账户管理ACCOUNT_MANAGER相关信息-->
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
     <!--13# 允许该应用接听来电。  in API level 26-->
     <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
 
-    <!--=========================B===========================-->
+    <!--=========================B（36个）===========================-->
 
     <!--14* 请求accessibilityservice服务，以确保只有系统可以绑定到它-->
     <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE" />
@@ -61,17 +70,260 @@
     <uses-permission android:name="android.permission.BIND_AUTOFILL_SERVICE" />
 
 
-    <!--17* API>23时使用BIND_CARRIER_MESSAGING_SERVICE,API<23时 使用BIND_CARRIER_SERVICES-->
-    <uses-permission android:name="android.permission.BIND_CARRIER_MESSAGING_SERVICE"/>
+    <!--18* API>23时使用BIND_CARRIER_MESSAGING_SERVICE,API<23时 使用BIND_CARRIER_SERVICES-->
+    <uses-permission android:name="android.permission.BIND_CARRIER_MESSAGING_SERVICE" />
 
-    <!--18(17)* API<=23时 使用BIND_CARRIER_SERVICES 允许绑定到运营商应用程序中的服务的系统进程将具有此权限。 运营商应用程序应该使用此权限来保护只允许系统绑定的服务-->
-    <uses-permission android:name="android.permission.BIND_CARRIER_SERVICES"/>
+    <!--19()-(18)* API<=23时 使用BIND_CARRIER_SERVICES 允许绑定到运营商应用程序中的服务的系统进程将具有此权限。 运营商应用程序应该使用此权限来保护只允许系统绑定的服务-->
+    <uses-permission android:name="android.permission.BIND_CARRIER_SERVICES" />
 
-    <!--19* 必须由ChooserTargetService要求，确保只有系统可以绑定到它-->
-    <uses-permission android:name="android.permission.BIND_CHOOSER_TARGET_SERVICE"/>
+    <!--20* 必须由ChooserTargetService要求，确保只有系统可以绑定到它-->
+    <uses-permission android:name="android.permission.BIND_CHOOSER_TARGET_SERVICE" />
 
-    <!--20* 必须由ConditionProviderService要求，确保只有系统可以绑定到它  added in API level 24-->
-    <uses-permission android:name="android.permission.BIND_CONDITION_PROVIDER_SERVICE"/>
+    <!--21* 必须由ConditionProviderService要求，确保只有系统可以绑定到它  added in API level 24-->
+    <uses-permission android:name="android.permission.BIND_CONDITION_PROVIDER_SERVICE" />
+
+
+    <!--22* DeviceAdminReceiver+DevicePolicyManager要求，只有系统才能使用-->
+    <uses-permission android:name="android.permission.BIND_DEVICE_ADMIN" />
+
+    <!--23* DreamService要求 ，只有系统才能使用 added in API level 21-->
+    <uses-permission android:name="android.permission.BIND_DREAM_SERVICE" />
+
+
+    <!--24* 由InCallService所要求，以确保只有系统可以绑定到它added in API level 23-->
+    <uses-permission android:name="android.permission.BIND_INCALL_SERVICE" />
+
+    <!--25* 自定义输入法 InputMethodService必须被要求，以确保只有系统可以绑定到它-->
+    <uses-permission android:name="android.permission.BIND_INPUT_METHOD" />
+
+    <!--26* 必须由MidiDeviceService来确保只有系统可以绑定到它 added in API level 23-->
+    <uses-permission android:name="android.permission.BIND_MIDI_DEVICE_SERVICE" />
+
+    <!--27* 必须由HostApduService或OffHostApduService来确保只有系统可以绑定到它。added in API level 19 -->
+    <uses-permission android:name="android.permission.BIND_NFC_SERVICE" />
+
+    <!--28* NotificationListenerService必须要求，以确保只有系统可以绑定到它 -->
+    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" />
+
+    <!--29* 自定义打印 必须是PrintService所必需的，以确保只有系统可以绑定到它 框架代码位于android.printservice包 added in API level 19-->
+    <uses-permission android:name="android.permission.BIND_PRINT_SERVICE" />
+
+    <!--30* 允许应用绑定到第三方快速设置图块。  只应由系统请求，应由TileService声明所要求。added in API level 24 -->
+    <uses-permission android:name="android.permission.BIND_QUICK_SETTINGS_TILE" />
+
+    <!--31* RemoteViewsService必须要求，以确保只有系统可以绑定到它-->
+    <uses-permission android:name="android.permission.BIND_REMOTEVIEWS" />
+
+    <!--32* Call Screening(来电过滤） CallScreeningService必须要求，以确保只有系统可以绑定到它。 added in API level 24-->
+    <uses-permission android:name="android.permission.BIND_SCREENING_SERVICE" />
+
+    <!--33* ConnectionService必须要求，以确保只有系统可以绑定到它 added in API level 23-->
+    <uses-permission android:name="android.permission.BIND_TELECOM_CONNECTION_SERVICE" />
+
+    <!--34* 必须由TextService（例如SpellCheckerService）来确保只有系统可以绑定到它-->
+    <uses-permission android:name="android.permission.BIND_TEXT_SERVICE" />
+
+    <!--35* TvInputService必须要求它确保只有系统可以绑定到它 added in API level 21-->
+    <uses-permission android:name="android.permission.BIND_TV_INPUT" />
+
+
+    <!--36* 必须通过VisualVoicemailService链接来确保只有系统可以绑定到它。added in API level 26 -->
+    <uses-permission android:name="android.permission.BIND_VISUAL_VOICEMAIL_SERVICE" />
+
+    <!--37*必须要求，以确保只有系统可以绑定到它 added in API level 21-->
+    <uses-permission android:name="android.permission.BIND_VOICE_INTERACTION" />
+
+    <!--38* VpnService用于应用扩展和构建自己的VPN解决方案  以确保只有系统可以绑定到它-->
+    <uses-permission android:name="android.permission.BIND_VPN_SERVICE" />
+
+    <!--39* VrListenerService必须要求，以确保只有系统可以绑定到它 added in API level 26-->
+    <uses-permission android:name="android.permission.BIND_VR_LISTENER_SERVICE" />
+
+    <!--=========================C（14个）===========================-->
+
+    <!--40@+ 使用相机 必要权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!--41@+ 许应用拨打电话，而无需通过拨号程式使用者介面让使用者确认通话-->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!--42@p 允许应用程式拨打任何电话号码（包括紧急电话号码），而无需通过拨号程式使用者界面让使用者确认所拨的电话。
+    不适用于第三方应用程序(系统专属) 是个private API，程序员几乎不用-->
+    <uses-permission android:name="android.permission.CALL_PRIVILEGED" />
+
+
+    <!--43@p 允许应用程序捕获音频输出。不适用于第三方应用程序。added in API level 19-->
+    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
+
+    <!--44@p允许应用程序捕获安全的视频输出。不适用于第三方应用程序。added in API level 19-->
+    <uses-permission android:name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" />
+
+    <!--45@p 允许应用程序捕捉视频输出。   不适用于第三方应用程序。added in API level 19-->
+    <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
+
+
+    <!--46@p 允许应用程序更改是否启用应用程序组件（非自己的应用程序组件）。    不适用于第三方应用程序。-->
+    <uses-permission android:name="android.permission.CHANGE_COMPONENT_ENABLED_STATE" />
+
+    <!--47 允许应用程序修改当前配置，例如语言环境-->
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+
+    <!--48 允许应用程序更改网络连接状态-->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <!--49 ()-48 允许应用程序进入Wi-Fi多播模式-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+
+    <!--50 ()-48 改变WiFi状态-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+
+    <!--51 允许应用程序清除设备上所有已安装应用程序的缓存区 -->
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+
+    <!--52 允许应用程序清除设备上所有已安装应用程序的数据区-->
+    <uses-permission android:name="android.permission.CLEAR_APP_USER_DATA" />
+
+    <!--53* 可通过位置更新-->
+    <uses-permission android:name="android.permission.CONTROL_LOCATION_UPDATES" />
+
+
+    <!--=========================D（6个）===========================-->
+
+    <!--54* 允许应用程序删除缓存文件。不适用于第三方应用程序。-->
+    <uses-permission android:name="android.permission.DELETE_CACHE_FILES" />
+
+    <!--55* 允许应用程序删除软件包。不适用于第三方应用程序。 从N开始，
+    当删除软件包的应用程序与安装该软件包的应用程序不是同一个应用程序时，请求用户确认。-->
+    <uses-permission android:name="android.permission.DELETE_PACKAGES" />
+
+    <!--56* 允许访问底层电源管理-->
+    <uses-permission android:name="android.permission.DEVICE_POWER" />
+
+    <!--57* 允许应用程序读取RW到诊断资源。 不适用于第三方应用程序-->
+    <uses-permission android:name="android.permission.DIAGNOSTIC" />
+
+    <!--58 允许应用程序在不安全的情况下禁用键盘锁-->
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+
+    <!--59* 允许应用程序从系统服务中检索状态转储信息。不适用于第三方应用程序。-->
+    <uses-permission android:name="android.permission.DUMP" />
+
+    <!--=========================E（1个）===========================-->
+
+    <!--60 允许应用程序展开或折叠状态栏-->
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+
+
+    <!--=========================F（3个）===========================-->
+
+    <!--61 不适用于第三方应用程序。 added in API level 1-->
+    <!--TODO 作为制造商测试应用程序运行，以root用户身份运行。 仅当设备在制造商测试模式下运行时才可用。-->
+    <uses-permission android:name="android.permission.FACTORY_TEST" />
+
+    <!--62 使用闪光灯-->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <!--63 允许程序强制使用back后退按键，无论Activity是否在顶层-->
+    <uses-permission android:name="android.permission.FORCE_BACK" />
+
+
+    <!--=========================G（6个）===========================-->
+
+    <!--64 允许访问帐户服务中的帐户列表。 注意：API>=23，则不需要“GET_ACCOUNTS”权限即可读取有关该帐户的信息。
+     API<23，所有应用都需要“GET_ACCOUNTS”权限才能阅读有关任何帐户的信息。 -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <!--65 允许访问帐户服务中的帐户列表。 added in API level 23-->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS_PRIVILEGED" />
+
+    <!--66 允许应用程序查找任何包的大小。-->
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+
+    <!--67 TODO -->
+    <uses-permission android:name="android.permission.GET_TOP_ACTIVITY_INFO" />
+
+    <!--此权限可用于内容提供商以允许全局搜索系统访问其数据。 通常， 当提供者具有保护它的某些权限时（全局搜索将不被期望保持） ，并且作为只读权限被添加到执行全局搜索查询的提供者中的路径时使用。 这种许可不能由正常的应用程序来保存; 除了全局搜索外， 应用程序还是使用它来保护自己免受其他人的攻击 added in API level 4-->
+    <uses-permission android:name="android.permission.GLOBAL_SEARCH" />
+
+
+    <!--=========================H（1个）===========================-->
+    <!--68-->
+    <!--TODO 访问硬件辅助设备，用于硬件测试。 仅当设备在制造商测试模式下运行时才可用。-->
+    <uses-permission android:name="android.permission.HARDWARE_TEST" />
+
+
+    <!--=========================I（6个）===========================-->
+
+    <!--69@- 允许应用程序打开网络套接字。 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--70允许访问本程序的底层事件，获取按键、轨迹球的事件流-->
+    <uses-permission android:name="android.permission.INJECT_EVENTS" />
+
+    <!--71 允许应用程序将location provider安装到Location Manager中。-->
+    <uses-permission android:name="android.permission.INSTALL_LOCATION_PROVIDER" />
+
+    <!--72允许程序安装 包应用-->
+    <uses-permission android:name="android.permission.INSTALL_PACKAGES" />
+
+    <!--73 允许应用程序在Launcher中安装快捷方式。 在Android O（API级别26）及更高版本中，INSTALL_SHORTCUT广播不再对您的应用程序有任何影响，
+     因为它是私有的隐式广播。 相反，您应该使用ShortcutManager类中的requestPinShortcut（） 方法创建应用程序快捷方式。
+     added in API level 19-->
+    <uses-permission android:name="android.permission.INSTALL_SHORTCUT" />
+
+    <!--74 允许程序打开内部窗口，不对第三方应用程序开放此权限-->
+    <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW" />
+
+
+    <!--=========================K（1个）===========================-->
+    <!--75 允许应用程序调用killBackgroundProcesses-->
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+
+    <!--=========================L（1个）===========================-->
+
+    <!--76 允许应用程序在硬件中使用位置功能，例如geofencing api。不适用于第三方应用程序-->
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+
+    <!--=========================M（9个）===========================-->
+
+    <!--77 允许程序管理AccountManager中的账户列表-->
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+
+    <!--78* 管理创建、摧毁、Z轴顺序，仅用于系统-->
+    <uses-permission android:name="android.permission.MANAGE_APP_TOKENS" />
+
+    <!--79 允许应用程序管理对文档的访问，通常作为文档选择器的一部分。
+     此权限只能由平台文档管理应用程序请求。 此权限不能授予第三方应用程序。
+     保护级别：签名 added in API level 19-->
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+
+    <!--80 允许程序执行软格式化，删除系统配置信息 不能授予第三方应用程序。-->
+    <uses-permission android:name="android.permission.MASTER_CLEAR" />
+
+    <!--81 允许应用知道正在播放的内容并控制其播放,不能授予第三方应用程序-->
+    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+
+    <!--82 允许应用修改全局音频设置-->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <!--83 允许修改电话状态 - 开机，mmi等。不包括拨打电话。不适用于第三方应用程序。-->
+    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+
+    <!--84 允许将文件系统格式化为可移动存储。不适用于第三方应用程序-->
+    <uses-permission android:name="android.permission.MOUNT_FORMAT_FILESYSTEMS" />
+
+    <!--85 允许安装和卸载可移动存储的文件系统。-->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <!--=========================N（1个）===========================-->
+
+    <!--允许应用程序通过NFC执行I / O操作   -->
+    <uses-permission android:name="android.permission.NFC" />
+
+    <!--=========================N（1个）===========================-->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+
 
 
 
