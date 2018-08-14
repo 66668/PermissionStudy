@@ -478,14 +478,14 @@
     <!--106 读取电话状态-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <!---->
+    <!--107 访问用户个人资料-->
     <uses-permission android:name="android.permission.READ_PROFILE" />
 
     <!--TODO 读取短信内容-->
     <!--108 读取短信内容-->
     <uses-permission android:name="android.permission.READ_SMS" />
 
-
+    <!--109 读取用户的社交信息流-->
     <uses-permission android:name="android.permission.READ_SOCIAL_STREAM" />
 
     <!--TODO 读取同步设置-->
@@ -496,12 +496,14 @@
     <!--111读取同步状态，获得Google在线同步状态-->
     <uses-permission android:name="android.permission.READ_SYNC_STATS" />
 
-    <!---->
+    <!--112 从一个提供器中获取数据，针对对应的提供器，应用程序需要“读访问权限”-->
     <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
 
-
+    <!--TODO (系统)-->
+    <!--113 读取语音邮件-->
     <uses-permission android:name="android.permission.READ_VOICEMAIL" />
 
+    <!--TODO 重启设备-->
     <!--114 重启设备-->
     <uses-permission android:name="android.permission.REBOOT" />
 
@@ -509,20 +511,248 @@
     <!--115 允许程序开机自动运行-->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <!--TODO 接受彩信-->
     <!--116 接受彩信-->
     <uses-permission android:name="android.permission.RECEIVE_MMS" />
 
-    <!--116 接受短信-->
+    <!--TODO 接受短信-->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
+    <!--TODO 接收Wap Push-->
+    <!--118 接收Wap Push-->
     <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH" />
+
+    <!--TODO 录音-->
+    <!--119 录音-->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!--120 重新排序系统Z轴运行中的任务-->
     <uses-permission android:name="android.permission.REORDER_TASKS" />
+
+    <!--121 -->
     <uses-permission android:name="android.permission.REQUEST_COMPANION_RUN_IN_BACKGROUND" />
+
+    <!--122-->
     <uses-permission android:name="android.permission.REQUEST_COMPANION_USE_DATA_IN_BACKGROUND" />
+
+    <!--123 允许应用程序请求删除安装包-->
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+
+    <!--124 一个应用程序请求它将永远被授予权限，而不需要用户批准或看到它-->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <!--TODO 请求安装包-->
+    <!--125 允许应用程序请求安装包。针对API>level22,必须持有该许可使用ACTION_INSTALL_PACKAGE应用。-->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+
+    <!--=========================S（21个）===========================-->
+    <!--TODO 程序回复来电-->
+    <!--126 允许用户在来电的时候用你的应用进行即时的短信息回复-->
+    <uses-permission android:name="android.permission.SEND_RESPOND_VIA_MESSAGE" />
+
+    <!--TODO 发送短信-->
+    <!--127 发送短信-->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <!---->
+    <!--128 允许程序设置Activity观察器一般用于monkey测试-->
+    <uses-permission android:name="android.permission.SET_ACTIVITY_WATCHER" />
+
+    <!--129 设置闹铃提醒-->
+    <uses-permission android:name="android.permission.SET_ALARM" />
+
+    <!--130 设置程序在后台是否总是退出-->
+    <uses-permission android:name="android.permission.SET_ALWAYS_FINISH" />
+
+    <!--TODO 设置动画缩放-->
+    <!--131设置全局动画缩放-->
+    <uses-permission android:name="android.permission.SET_ANIMATION_SCALE" />
+
+    <!--TODO -->
+    <!--132设置调试程序，一般用于开发-->
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+
+    <!--TODO 设置屏幕方向-->
+    <!--133 设置屏幕方向为横屏或标准方式显示，不用于普通应用-->
+    <uses-permission android:name="android.permission.SET_ORIENTATION" />
+
+    <!--TODO (系统)-->
+    <uses-permission android:name="android.permission.SET_POINTER_SPEED" />
+
+    <!--TODO 设置进程限制-->
+    <!--135 允许程序设置最大的进程数量的限制-->
+    <uses-permission android:name="android.permission.SET_PROCESS_LIMIT" />
+
+    <!--TODO 设置系统时间-->
+    <!--136 设置系统时间-->
+    <uses-permission android:name="android.permission.SET_TIME" />
+
+    <!--TODO 设置系统时区-->
+    <!--137 设置系统时区-->
+    <uses-permission android:name="android.permission.SET_TIME_ZONE" />
+
+    <!--TODO 设置桌面壁纸-->
+    <!--138 设置桌面壁纸-->
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
+    <!--TODO发送永久进程信号-->
+    <!--139 发送永久进程信号-->
+    <uses-permission android:name="android.permission.SIGNAL_PERSISTENT_PROCESSES" />
+
+    <!--TODO 状态栏控制-->
+    <!--140 允许程序打开、关闭、禁用状态栏-->
+    <uses-permission android:name="android.permission.STATUS_BAR" />
+
+    <!--TODO 访问订阅内容-->
+    <!--141 访问订阅信息的数据库-->
+    <uses-permission android:name="android.permission.SUBSCRIBED_FEEDS_READ" />
+
+    <!--TODO 写入订阅内容-->
+    <!--142写入或修改订阅内容的数据库-->
+    <uses-permission android:name="android.permission.SUBSCRIBED_FEEDS_WRITE" />
+
+    <!--TODO 显示系统窗口-->
+    <!--143 显示系统窗口-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+
+    <!--=========================T（1个）===========================-->
+
+    <!--TODO 红外发射器-->
+    <!--144允许使用设备的红外发射器，如果可用-->
+    <uses-permission android:name="android.permission.TRANSMIT_IR" />
+
+    <!--=========================U（4个）===========================-->
+
+    <!-- TODO 删除快捷方式-->
+    <!-- 145 删除快捷方式/83 创建-->
+    <uses-permission android:name="android.permission.UNINSTALL_SHORTCUT" />
+
+    <!--TODO 更新设备状态-->
+    <!--146 更新设备状态-->
+    <uses-permission android:name="android.permission.UPDATE_DEVICE_STATS" />
+
+    <!--TODO  使用证书-->
+    <!--147 允许程序请求验证从AccountManager-->
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <!--TODO 使用SIP视频-->
+    <!--148 允许程序使用SIP视频服务-->
+    <uses-permission android:name="android.permission.USE_SIP" />
+
+    <!--=========================V（1个）===========================-->
+
+    <!--TODO 振动-->
+    <!--149 振动-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!--=========================W（17个）===========================-->
+
+    <!--TODO 读写权限-->
+    <!--150 读写权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!--TODO 唤醒锁定-->
+    <!--151 允许程序在手机屏幕关闭后后台进程仍然运行-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!--TODO 写入GPRS接入点设置-->
+    <!--152 写入GPRS接入点设置-->
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
+
+    <!--TODO 写入日程提醒-->
+    <!--153 写入日程提醒-->
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
+    <!--TODO 写入联系人数据，但不可读取-->
+    <!--154写入联系人数据，但不可读取-->
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+
+    <!--TODO 写入联系人到通讯录，但不可读取-->
+    <!--154写入联系人，但不可读取-->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+
+    <!--155 允许程序修改Google服务地图-->
+    <uses-permission android:name="android.permission.WRITE_GSERVICES" />
+
+    <!--TODO 写入收藏夹和历史记录-->
+    <!--156 写入浏览器历史记录或收藏夹，但不可读取-->
+    <uses-permission android:name="android.permission.WRITE_HISTORY_BOOKMARKS" />
+
+    <!--157写入个人资料数据-->
+    <uses-permission android:name="android.permission.WRITE_PROFILE" />
+
+    <!--TODO 读写系统敏感设置-->
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+
+    <!--TODO 读写系统设置-->
+    <!--159 读写系统设置-->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <!--160 编写短信-->
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+
+    <!--161 读取用户的社交信息流-->
+    <uses-permission android:name="android.permission.WRITE_SOCIAL_STREAM" />
+
+    <!--162 写入Google在线同步设置-->
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+
+    <!--163 允许应用程序向用户词典中写入新词-->
+    <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
+
+    <!--164 写语音邮件-->
+    <uses-permission android:name="android.permission.WRITE_VOICEMAIL" />
+
+
+    <!--=========================危险权限组（9个）字母排序===========================-->
+
+    <!--TODO 说明：危险权限需要在6.0+中（动态）申请，所有的危险权限都由权限组划分，如下：-->
+
+    <!--==================1-日历 android.permission-group.CALENDAR 2个==================-->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
+    <!--==================2-相机 android.permission-group.CAMERA 1个==================-->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!--==================3-通讯录 android.permission-group.CONTACTS 3个==================-->
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <!--==================4-定位 android.permission-group.LOCATION 2个==================-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!--==================5-录音 android.permission-group.MICROPHONE 1个==================-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!--==================6-电话 android.permission-group.PHONE 7个==================-->
+    <uses-permission android:name="android.permission.ADD_VOICEMAIL" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.USE_SIP" />
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+
+    <!--==================7-传感器 android.permission-group.SENSORS 1个==================-->
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+
+    <!--==================8-短信 android.permission-group.SMS 6个==================-->
+    <uses-permission android:name="android.permission.READ_CELL_BROADCASTS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_MMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <!--==================9-存储 android.permission-group.STORAGE 2个==================-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
     <application
