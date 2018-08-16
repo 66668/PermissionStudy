@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_show"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@android:color/white" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_show"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:text="完成"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp" />
+</RelativeLayout>

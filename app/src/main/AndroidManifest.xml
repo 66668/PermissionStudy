@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.sjy.permission">
+
     <!--====================================最全权限及解析2018-06-01===========================================-->
-    <!--TODO 说明：权限按字母排序 之后会总结6.0+的 动态权限 权限组 及 常用权限
-    -->
+    <!--TODO 说明：权限按字母排序 之后会总结6.0+的 动态权限 权限组 及 常用权限 -->
 
     <!--=========================A(12个)===========================-->
     <!--TODO 访问登记属性-->
@@ -769,6 +769,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".SingleSelectAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SingleAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MultiAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SpecialAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MultiSelectAct"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

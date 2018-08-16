@@ -8,7 +8,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
-        
+        //使用butterknife注解(正常三步：（1）project/build.gradle（2）module该处添加依赖（3）下载插件android-butterknife-zelezny，然后才能正常使用)
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
