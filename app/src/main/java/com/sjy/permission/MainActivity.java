@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.btn_multi://多个权限
 
+
                 Bundle bundle2 = new Bundle();
                 bundle2.putSerializable("bean", (Serializable) lists);
                 startActForResult(MultiAct.class, bundle2);
