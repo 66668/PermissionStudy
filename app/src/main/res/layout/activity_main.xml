@@ -17,13 +17,40 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/btn_setting1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:text="查看权限设置" />
+
+            <Button
+                android:id="@+id/btn_setting2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:text="应用详情设置" />
+
+            <Button
+                android:id="@+id/btn_setting3"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:text="系统应用权限管理" />
+
+            <Button
                 android:id="@+id/btn_single"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:text="单个权限申请" />
+                android:text="默认方式-单个权限申请" />
 
 
             <Button
@@ -33,7 +60,16 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:text="多个权限申请" />
+                android:text="默认方式-多个权限申请" />
+
+            <Button
+                android:id="@+id/btn_single_1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:text="自定义-权限申请" />
 
 
             <Button

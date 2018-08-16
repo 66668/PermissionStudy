@@ -1,15 +1,15 @@
 package com.sjy.permission;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sjy.permission.utils.DataBean;
 import com.sjy.permission.utils.DataUtils;
+import com.sjy.permission.utils.PermissionUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,6 +28,18 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn_multi)
     Button btn_multi;
 
+    @BindView(R.id.btn_single_1)
+    Button btn_single_1;
+
+    @BindView(R.id.btn_setting1)
+    Button btn_setting1;
+
+    @BindView(R.id.btn_setting2)
+    Button btn_setting2;
+
+    @BindView(R.id.btn_setting3)
+    Button btn_setting3;
+
     @BindView(R.id.btn_other)
     Button btn_other;
 
@@ -42,15 +54,26 @@ public class MainActivity extends AppCompatActivity {
         createData();
     }
 
-    @OnClick({R.id.btn_single, R.id.btn_multi, R.id.btn_other})
+    @OnClick({R.id.btn_single, R.id.btn_multi, R.id.btn_other, R.id.btn_single_1, R.id.btn_setting1, R.id.btn_setting2, R.id.btn_setting3})
     public void onButtonClick(View view) {
         switch (view.getId()) {
+            case R.id.btn_setting1://权限设置1
+                new PermissionUtils(this).goPermissionSettings();//方式1
+                // new PermissionUtils(this).goIntentSetting();//方式2
+
+                break;
+            case R.id.btn_setting2://权限设置2
+                new PermissionUtils(this).getAppDetailSettingIntent();
+                break;
+            case R.id.btn_setting3://系统应用管理
+                new PermissionUtils(this).getSystemManageIntent();
+                break;
+
             case R.id.btn_single://单个权限
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("bean", (Serializable) lists);
-                startAct(SingleAct.class, bundle);
-                btn_single.setClickable(false);
+                startActForResult(SingleAct.class, bundle);
                 break;
 
             case R.id.btn_multi://多个权限
@@ -58,13 +81,17 @@ public class MainActivity extends AppCompatActivity {
                 Bundle bundle2 = new Bundle();
                 bundle2.putSerializable("bean", (Serializable) lists);
                 startAct(MultiAct.class, bundle2);
-                btn_multi.setClickable(false);
                 break;
+
+            case R.id.btn_single_1://自定义权限
+
+                startAct(SpecialAct.class);
+                break;
+
 
             case R.id.btn_other://特殊权限
 
                 startAct(SpecialAct.class);
-                btn_other.setClickable(false);
                 break;
         }
     }
@@ -72,9 +99,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        btn_single.setClickable(true);
-        btn_multi.setClickable(true);
-        btn_other.setClickable(true);
         if (data == null) {
             return;
         }
@@ -92,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     private void refreshData(Intent data) {
         List<DataBean> datalists = (List<DataBean>) data.getExtras().getSerializable("bean");
         lists = DataUtils.getUnUseData(datalists);
+        Log.d("SJY", "main 返回=" + lists.size());
     }
 
     //=========================跳转==============================

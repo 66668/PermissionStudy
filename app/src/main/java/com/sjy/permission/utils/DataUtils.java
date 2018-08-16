@@ -1,6 +1,7 @@
 package com.sjy.permission.utils;
 
 import android.Manifest;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,7 @@ public class DataUtils {
                 newList.add(bean);
             }
         }
+        Log.d("SJY", "处理 返回=" + newList.size());
         return newList;
     }
 

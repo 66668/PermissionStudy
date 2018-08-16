@@ -9,22 +9,27 @@
         android:id="@+id/tv_show"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@android:color/white" />
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_show"
+        android:layout_marginBottom="50dp"
         android:layout_marginTop="10dp"
         android:background="@android:color/white">
 
     </android.support.v7.widget.RecyclerView>
 
     <Button
-        android:text="完成"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_back"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:text="完成"
+        android:visibility="invisible" />
 </RelativeLayout>

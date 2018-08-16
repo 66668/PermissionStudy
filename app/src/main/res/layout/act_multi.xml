@@ -25,11 +25,11 @@
         <TextView
             android:id="@+id/tv_show2"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="200dp"
             android:hint="点击选择要申请的权限"
             android:padding="10dp"
             android:textColor="@android:color/black"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

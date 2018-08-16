@@ -30,7 +30,7 @@ public class MultiAct extends AppCompatActivity {
     Button btn_multi_apply;
     //=======================================================
     private List<DataBean> lists = new ArrayList<>();
-    String permissionStr;
+    private List<DataBean> selectList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +50,12 @@ public class MultiAct extends AppCompatActivity {
                 }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("bean", (Serializable) lists);
-                startActForResult(SingleSelectAct.class, bundle);
+                startActForResult(MultiSelectAct.class, bundle);
                 break;
 
             case R.id.btn_multi_apply://申请
                 //
-                permissionStr = tv_show1.getText().toString();
-                if (permissionStr == null || permissionStr.isEmpty()) {
+                if (selectList == null || selectList.size() <= 0) {
                     Toast.makeText(this, "请选择权限", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -91,18 +90,23 @@ public class MultiAct extends AppCompatActivity {
     }
 
     private void getSelectData(Intent data) {
-        DataBean bean = (DataBean) data.getExtras().getSerializable("bean");
-        if (bean == null) {
+        selectList = (List<DataBean>) data.getExtras().getSerializable("bean");
+        if (selectList == null || selectList.size() <= 0) {
             Toast.makeText(this, "选择数据返回为空", Toast.LENGTH_SHORT).show();
+            tv_show1.setText("");
             return;
         }
-        permissionStr = bean.getPermission();
 
-        showData(permissionStr);
+        showData();
     }
 
-    private void showData(String permissionStr) {
-        tv_show1.setText(permissionStr);
+    private void showData() {
+        StringBuilder builder = new StringBuilder();
+        for (DataBean bean : selectList) {
+            builder.append(bean.getPermission());
+            builder.append("\n");
+        }
+        tv_show1.setText(builder.toString());
     }
 
     //=========================跳转==============================

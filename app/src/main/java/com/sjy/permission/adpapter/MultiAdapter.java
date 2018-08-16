@@ -41,7 +41,7 @@ public class MultiAdapter extends RecyclerView.Adapter<MultiAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final MyHolder holder, final int position) {
-        final DataBean bean = list.get(position);
+         DataBean bean = list.get(position);
         if (bean != null) {
 
             holder.tv.setText(bean.getPermission());
@@ -50,7 +50,7 @@ public class MultiAdapter extends RecyclerView.Adapter<MultiAdapter.MyHolder> {
                 @Override
                 public void onClick(View view) {
                     if (onItemListener != null) {
-                        onItemListener.onItemClickListener(bean);
+                        onItemListener.onItemClickListener(position);
                     }
 
                 }
@@ -82,7 +82,7 @@ public class MultiAdapter extends RecyclerView.Adapter<MultiAdapter.MyHolder> {
     public OnItemClickListener onItemListener;
 
     public interface OnItemClickListener {
-        void onItemClickListener(DataBean permission);
+        void onItemClickListener(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
