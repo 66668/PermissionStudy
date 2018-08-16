@@ -79,7 +79,7 @@ public class SingleAct extends AppCompatActivity implements ActivityCompat.OnReq
                 //
                 permissionStr = tv_show1.getText().toString().trim();
                 if (permissionStr == null || permissionStr.isEmpty()) {
-                    Toast.makeText(this, "请选择权限", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "请选择权限", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 applyPermission();
@@ -116,7 +116,7 @@ public class SingleAct extends AppCompatActivity implements ActivityCompat.OnReq
 
     }
 
-    //=========================和权限相关的代码==============================
+    //=========================权限相关的代码==============================
 
     /**
      * googledemo推荐的方法

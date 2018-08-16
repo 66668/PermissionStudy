@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Bundle bundle2 = new Bundle();
                 bundle2.putSerializable("bean", (Serializable) lists);
-                startAct(MultiAct.class, bundle2);
+                startActForResult(MultiAct.class, bundle2);
                 break;
 
             case R.id.btn_single_1://自定义权限

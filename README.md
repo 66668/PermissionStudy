@@ -758,7 +758,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
-(一) 单个权限申请的方法（SingleAct）
+(三) 单个权限申请的方法（SingleAct）
 ------------
 
 注意：targetSdkVersion和Build.VERSION.SDK_INT都大于23时，才起作用
@@ -857,3 +857,68 @@
             }
     
         }
+
+
+
+(四) 多个权限申请的方法（MultiAct）
+------------
+说明：原生申请方式和单个权限方式相同，需要注意的地方便是：
+1.判断是否需要申请权限的判断，必须包含所有要申请的权限判断，用||隔开，比如有两个，就要写两个，不可以写1个
+2.是否需要向用户解释为何申请权限，也要写全要申请的权限判断，用||隔开
+4.重写onRequestPermissionsResult方法可如下(和单个申请没有区别)：
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_CODE_MULTI:
+                boolean isGranted = true;
+                StringBuilder builder = new StringBuilder();
+                deniedArray = new String[grantResults.length];
+                for (int i = 0; i < grantResults.length; i++) {
+                    if (grantResults[i] < 0) {
+                        isGranted = false;
+                        builder.append(permissions[i]);
+                        builder.append(" ");
+                        deniedArray[i] = permissions[i];
+                    }
+                }
+
+                if (isGranted) {
+                    //多个权限申请 通过的处理
+                    Snackbar.make(layout, "申请权限通过",
+                            Snackbar.LENGTH_SHORT)
+                            .show();
+                    //可以执行功能了
+                    for (DataBean item : selectList) {
+                        for (DataBean bean : lists) {
+                            if (item.getPermission().equals(bean.getPermission())) {
+                                bean.setUsed(true);
+                            }
+                        }
+
+                    }
+
+                } else {
+                    //权限申请拒绝的处理
+                    Snackbar.make(layout, "权限" + builder.toString() + "被拒绝！", Snackbar.LENGTH_SHORT)
+                            .setAction("设置", new View.OnClickListener() {//TODO
+                                @Override
+                                public void onClick(View view) {
+                                    //不询问，直接打开设置界面
+                                    if (!ActivityCompat.shouldShowRequestPermissionRationale(MultiAct.this, deniedArray[0])) {
+                                        //3.手动打开权限
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", MultiAct.this.getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivityForResult(intent, REQUEST_SECOND_OPEN);
+                                    }
+                                }
+                            })
+                            .show();
+                }
+
+                break;
+        }
+
+    }
