@@ -782,9 +782,15 @@
         <activity
             android:name=".SpecialAct"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".MultiSelectAct"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".MyPermissionAct"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

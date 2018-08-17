@@ -63,13 +63,14 @@
                 android:text="原生方式-多个权限申请" />
 
             <Button
-                android:id="@+id/btn_single_1"
+                android:id="@+id/btn_type_1"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:text="自定义-权限申请" />
+                android:textAllCaps="false"
+                android:text="封装方式1：baseAct封装" />
 
 
             <Button

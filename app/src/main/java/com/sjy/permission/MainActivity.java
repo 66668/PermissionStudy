@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn_multi)
     Button btn_multi;
 
-    @BindView(R.id.btn_single_1)
-    Button btn_single_1;
+    @BindView(R.id.btn_type_1)
+    Button btn_type_1;
 
     @BindView(R.id.btn_setting1)
     Button btn_setting1;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         createData();
     }
 
-    @OnClick({R.id.btn_single, R.id.btn_multi, R.id.btn_other, R.id.btn_single_1, R.id.btn_setting1, R.id.btn_setting2, R.id.btn_setting3})
+    @OnClick({R.id.btn_single, R.id.btn_multi, R.id.btn_other, R.id.btn_type_1, R.id.btn_setting1, R.id.btn_setting2, R.id.btn_setting3})
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.btn_setting1://权限设置1
@@ -78,15 +78,15 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.btn_multi://多个权限
 
-
                 Bundle bundle2 = new Bundle();
                 bundle2.putSerializable("bean", (Serializable) lists);
                 startActForResult(MultiAct.class, bundle2);
                 break;
 
-            case R.id.btn_single_1://自定义权限
-
-                startAct(SpecialAct.class);
+            case R.id.btn_type_1://权限封装
+                Bundle bundle3 = new Bundle();
+                bundle3.putSerializable("bean", (Serializable) lists);
+                startActForResult(MyPermissionAct.class, bundle3);
                 break;
 
 
@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         if (data == null) {
             return;
         }
-
         refreshData(data);
     }
 

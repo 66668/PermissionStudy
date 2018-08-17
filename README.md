@@ -778,7 +778,7 @@
     
 
 
-2.是否需要向用户解释为何申请权限:该处代码可自定义,比如用弹窗，snackbar等方式
+2.是否需要向用户解释为何申请权限:该处代码可自定义,比如用弹窗，snackbar等方式，该处代码是为了避免第一次拒绝后不再继续申请的问题
 
      if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.CAMERA)){
         //解释为何申请权限的代码
@@ -925,3 +925,145 @@
         }
 
     }
+    
+    
+    
+(五) 常见的封装方式和常见的自定义
+------------------------------------
+
+（1）baseAct封装：将权限封装后，只需一条语句就可以处理，调用方式如下：
+------------------------------------
+
+在act的调用如下：
+
+    requestPermission(permissionArray, layout, new MyPermissionListener() {
+        @Override
+        public void onGranted() {
+                        //权限通过，使用功能
+              Snackbar.make(layout, "MyPermissionAct--权限通过", Snackbar.LENGTH_SHORT).show();
+        }
+    });
+    
+baseAct的封装如下：
+
+
+    /**
+     * 自定义封装方式1：提取到基类中处理，listener处理返回
+    */
+
+    public class BaseAct extends AppCompatActivity {
+    MyPermissionListener listener;//监听返回，处理申请权限的返回
+    View permissionView;//权限结果提示的布局
+    String[] permissions;
+    private static final int REQUEST_CODE = 10001;
+    private static final int REQUEST_OPEN = 10002;
+
+    //=========================权限封装相关的代码==============================
+
+    /**
+     * 申请权限第一个调用方法
+     */
+    public void requestPermission(final String[] permissions, View v, MyPermissionListener l) {
+        this.listener = l;
+        this.permissionView = v;
+        this.permissions = permissions;
+        //1.判断sdk 和targetsdk是否满足
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && this.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.M) {
+
+            //2.判断是否需要申请权限(一般需要全部判断，本处测试写一个)
+            boolean isCheck = false;
+            for (int i = 0; i < permissions.length; i++) {
+                isCheck = (ContextCompat.checkSelfPermission(this, permissions[i]) != PackageManager.PERMISSION_GRANTED) || isCheck;
+            }
+            if (isCheck) {
+                //解释为何申请权限的代码
+                Snackbar.make(permissionView, "该功能需要使用权限（BaseAct）",
+                        Snackbar.LENGTH_INDEFINITE)
+                        .setAction("允许", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //3.申请权限
+                                ActivityCompat.requestPermissions(BaseAct.this, permissions, REQUEST_CODE);
+                            }
+                        })
+                        .show();
+            } else {
+                //3.申请权限
+                ActivityCompat.requestPermissions(BaseAct.this, permissions, REQUEST_CODE);
+            }
+
+        } else {
+            //说明：这里需要打印结果，粗心的程序员会对这两个地方不处理，导致没法申请权限
+            Log.d("SJY", "当前sdk=" + Build.VERSION.SDK_INT + "当前targetsdk=" + this.getApplicationInfo().targetSdkVersion);
+            //不要申请，直接使用
+            listener.onGranted();
+        }
+
+    }
+
+    /**
+     * 04
+     *
+     * @param requestCode
+     * @param permissions  多个权限的数组
+     * @param grantResults 多个权限结果数组，通过的是0，不通过的是-1
+     */
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_CODE:
+                boolean isGranted = true;
+                final String[] deniedArray = new String[grantResults.length];
+                for (int i = 0; i < grantResults.length; i++) {
+                    if (grantResults[i] < 0) {
+                        isGranted = false;
+                        deniedArray[i] = permissions[i];
+                    }
+                }
+
+                if (isGranted) {
+                    //可以执行功能了
+                    listener.onGranted();
+
+                } else {
+                    //权限申请拒绝的处理
+                    Snackbar.make(permissionView, deniedArray.length + "个权限被拒绝！", Snackbar.LENGTH_SHORT)
+                            .setAction("设置", new View.OnClickListener() {//TODO
+                                @Override
+                                public void onClick(View view) {
+                                    //不询问，直接打开设置界面
+                                    boolean isReqest = false;
+                                    for (int i = 0; i < deniedArray.length; i++) {
+                                        isReqest = (!ActivityCompat.shouldShowRequestPermissionRationale(BaseAct.this, deniedArray[0])) || isReqest;
+                                    }
+                                    if (isReqest) {
+                                        //3.手动打开权限
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", BaseAct.this.getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivityForResult(intent, REQUEST_OPEN);
+                                    }
+                                }
+                            })
+                            .show();
+                }
+
+                break;
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case REQUEST_OPEN://永久拒绝后，手动打开权限的返回处理
+                //3.再次申请
+                ActivityCompat.requestPermissions(BaseAct.this, permissions, REQUEST_CODE);
+                break;
+        }
+    }
+    }
+     
