@@ -1352,5 +1352,10 @@ RxPermissions独有方式：requestEach方式
     //                });
     }
    
-2-RxPermissions：
+   
+2-AndPermission：https://github.com/yanzhenjie/AndPermission
 ------------------------------------ 
+AndPermission，最简单的方式就是直接使用implementation 'com.yanzhenjie:permission:2.0.0-rc11'，由于高度集成，已经不支持lib源码方式，而且使用的stle也在
+依赖中，没法查看，比较恶心，不推荐深度使用，就当看画了。
+
+示例demo在AndPermissionAct中，参考就可以

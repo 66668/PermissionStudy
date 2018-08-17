@@ -46,6 +46,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
     //第三方框架AndPermission :
-    implementation 'com.yanzhenjie:permission:2.0.0-rc11'
+    implementation 'com.yanzhenjie:permission:2.0.0-rc11'//只有方式1
+
 
 }
