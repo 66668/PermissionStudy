@@ -779,6 +779,7 @@
 
 
 2.是否需要向用户解释为何申请权限:该处代码可自定义,比如用弹窗，snackbar等方式，该处代码是为了避免第一次拒绝后不再继续申请的问题
+用户第一次点击一个需要权限的地方，该方法返回false，当用户拒绝掉该权限，下次点击此权限处，该方法会返回true
 
      if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.CAMERA)){
         //解释为何申请权限的代码
@@ -931,6 +932,7 @@
 (五) 常见的封装方式和常见的自定义
 ------------------------------------
 
+
 （1）baseAct封装：将权限封装后，只需一条语句就可以处理，调用方式如下：
 ------------------------------------
 
@@ -1066,4 +1068,55 @@ baseAct的封装如下：
         }
     }
     }
-     
+    
+（2）处理方法封装在工具类中，统一处理方式
+------------------------------------ 
+封装内容见 com.sjy.permission.type2包，
+1.act中调用： 
+ 
+ 
+     // =========================权限相关代码==============================
+     private void toStartPermission() {
+         permissionHelper = new PermissionHelper(this, new PermissionInterface() {
+             @Override
+             public int getPermissionsRequestCode() {
+                 //设置权限请求requestCode，只有不跟onRequestPermissionsResult方法中的其他请求码冲突即可。
+                 return 10002;
+             }
+ 
+             @Override
+             public String[] getPermissions() {
+                 //设置该界面所需的全部权限
+                 return permissionArray;
+             }
+  
+             @Override
+             public void requestPermissionsSuccess() {
+                 //权限请求用户已经全部允许
+                 Snackbar.make(layout, "MyPermissionAct2--权限通过", Snackbar.LENGTH_SHORT)
+                         .show();
+             }
+ 
+             @Override
+             public void requestPermissionsFail() {
+                 Snackbar.make(layout, "有权限拒绝", Snackbar.LENGTH_SHORT)
+                         .show();
+             }
+ 
+         });
+         //发起调用：
+         permissionHelper.requestPermissions();
+     }
+ 
+ 
+2.截获onRequestPermissionsResult，放到工具类中处理：
+ 
+     //权限回调处理
+     @Override
+     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+         if (permissionHelper.requestPermissionsResult(requestCode, permissions, grantResults)) {
+             //权限请求已处理，不用再处理
+             return;
+         }
+         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+     }  

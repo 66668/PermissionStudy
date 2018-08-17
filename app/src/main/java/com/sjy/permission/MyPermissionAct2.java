@@ -2,10 +2,9 @@ package com.sjy.permission;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +14,8 @@ import android.widget.Toast;
 
 import com.sjy.permission.type1.BaseAct;
 import com.sjy.permission.type1.MyPermissionListener;
+import com.sjy.permission.type2.PermissionHelper;
+import com.sjy.permission.type2.PermissionInterface;
 import com.sjy.permission.utils.DataBean;
 
 import java.io.Serializable;
@@ -28,9 +29,9 @@ import butterknife.OnClick;
 /**
  * 权限封装：使用原生方式，需要每一次申请都要注意避免特殊情况，比较麻烦，本类将使用自定义封装的样式演示，一劳永逸
  * <p>
- * 方式1：将方法封装在act基类，利用监听处理
+ * 方式2：将方法封装在工具类中，使act界面整洁
  */
-public class MyPermissionAct extends BaseAct {
+public class MyPermissionAct2 extends BaseAct {
     //=======================================================
     @BindView(R.id.layout)
     RelativeLayout layout;
@@ -48,8 +49,7 @@ public class MyPermissionAct extends BaseAct {
     private List<DataBean> lists = new ArrayList<>();
     private List<DataBean> selectList = new ArrayList<>();
     private String[] permissionArray;
-    private String[] deniedArray;
-
+    PermissionHelper permissionHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,14 +80,8 @@ public class MyPermissionAct extends BaseAct {
                 }
 
                 //封装权限使用，拒绝的情况已封装在base中，不需要自己再处理
-                requestPermission(permissionArray, layout, new MyPermissionListener() {
-                    @Override
-                    public void onGranted() {
-                        //权限通过，使用功能
-                        Snackbar.make(layout, "MyPermissionAct--权限通过", Snackbar.LENGTH_SHORT)
-                                .show();
-                    }
-                });
+                toStartPermission();
+
                 break;
         }
     }
@@ -115,6 +109,49 @@ public class MyPermissionAct extends BaseAct {
 
 
     // =========================权限相关代码==============================
+
+    private void toStartPermission() {
+        permissionHelper = new PermissionHelper(this, new PermissionInterface() {
+            @Override
+            public int getPermissionsRequestCode() {
+                //设置权限请求requestCode，只有不跟onRequestPermissionsResult方法中的其他请求码冲突即可。
+                return 10002;
+            }
+
+            @Override
+            public String[] getPermissions() {
+                //设置该界面所需的全部权限
+                return permissionArray;
+            }
+
+            @Override
+            public void requestPermissionsSuccess() {
+                //权限请求用户已经全部允许
+                Snackbar.make(layout, "MyPermissionAct2--权限通过", Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+
+            @Override
+            public void requestPermissionsFail() {
+                Snackbar.make(layout, "有权限拒绝", Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+
+        });
+        //发起调用：
+        permissionHelper.requestPermissions();
+    }
+
+    //权限回调处理
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (permissionHelper.requestPermissionsResult(requestCode, permissions, grantResults)) {
+            //权限请求已处理，不用再处理
+            return;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
 
     // =========================private==============================
     private void getIntentData() {

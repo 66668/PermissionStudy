@@ -69,8 +69,19 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:textAllCaps="false"
-                android:text="封装方式1：baseAct封装" />
+                android:text="封装方式1：baseAct封装"
+                android:textAllCaps="false" />
+
+
+            <Button
+                android:id="@+id/btn_type_2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:text="封装方式2：工具类"
+                android:textAllCaps="false" />
 
 
             <Button

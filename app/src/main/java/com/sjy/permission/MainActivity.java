@@ -22,14 +22,6 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
     //=======================================================
 
-    @BindView(R.id.btn_single)
-    Button btn_single;
-
-    @BindView(R.id.btn_multi)
-    Button btn_multi;
-
-    @BindView(R.id.btn_type_1)
-    Button btn_type_1;
 
     @BindView(R.id.btn_setting1)
     Button btn_setting1;
@@ -39,6 +31,21 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_setting3)
     Button btn_setting3;
+
+    //
+    @BindView(R.id.btn_single)
+    Button btn_single;
+
+    @BindView(R.id.btn_multi)
+    Button btn_multi;
+
+
+    //
+    @BindView(R.id.btn_type_1)
+    Button btn_type_1;
+
+    @BindView(R.id.btn_type_2)
+    Button btn_type_2;
 
     @BindView(R.id.btn_other)
     Button btn_other;
@@ -54,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         createData();
     }
 
-    @OnClick({R.id.btn_single, R.id.btn_multi, R.id.btn_other, R.id.btn_type_1, R.id.btn_setting1, R.id.btn_setting2, R.id.btn_setting3})
+    @OnClick({R.id.btn_single, R.id.btn_multi, R.id.btn_other, R.id.btn_type_1, R.id.btn_type_2, R.id.btn_setting1, R.id.btn_setting2, R.id.btn_setting3})
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.btn_setting1://权限设置1
@@ -83,10 +90,17 @@ public class MainActivity extends AppCompatActivity {
                 startActForResult(MultiAct.class, bundle2);
                 break;
 
-            case R.id.btn_type_1://权限封装
+            case R.id.btn_type_1://权限封装:baseAct
                 Bundle bundle3 = new Bundle();
                 bundle3.putSerializable("bean", (Serializable) lists);
                 startActForResult(MyPermissionAct.class, bundle3);
+                break;
+
+
+            case R.id.btn_type_2://权限封装2:工具类
+                Bundle bundle4 = new Bundle();
+                bundle4.putSerializable("bean", (Serializable) lists);
+                startActForResult(MyPermissionAct2.class, bundle4);
                 break;
 
 

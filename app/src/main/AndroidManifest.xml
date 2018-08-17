@@ -791,6 +791,10 @@
             android:name=".MyPermissionAct"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".MyPermissionAct2"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
