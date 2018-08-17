@@ -1120,3 +1120,237 @@ baseAct的封装如下：
          }
          super.onRequestPermissionsResult(requestCode, permissions, grantResults);
      }  
+     
+         
+() 第三方框架使用
+------------------------------------
+
+1-RxPermissions（Rxjava2）：
+------------------------------------ 
+github--https://github.com/tbruyelle/RxPermissions
+
+对RxPermissions使用评价：相对于baseAct集成，RxPermissions没有更好的拒绝处理，和原生的方式没有任何区别，只是用rxjava代替了act中重写的
+onRequestPermissionsResult（）。
+
+集成步骤：（2018/08/17）
+
+添加依赖有两种方式，
+一种是添加lib_rxpermission，然后在app/build.gradle中添加 implementation project(':lib_rxpermission')
+(lib_rxpermission依赖可以直接添加到主app中，更省事，不需要引用implementation project(':lib_rxpermission'))
+另一种方式在app/build.gradle中引用：implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+第一种虽然麻烦，但是你可以看到源码，推荐使用
+
+所有依赖配置：
+
+(1)project/build.gradle
+ 
+    allprojects {
+        repositories {
+            maven { url 'https://jitpack.io' }
+        }
+    }
+
+(2) app/build.gradle
+
+    dependencies {
+    
+        implementation project(':lib_rxpermission')//方式1
+        //implementation 'com.github.tbruyelle:rxpermissions:0.10.2'//方式2
+        
+        implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
+        implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    }
+ 
+如果将lib_rxpermission设置成 android library,则需要在app/build.gradle添加：
+
+    dependencies {
+         implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    }
+     
+如果lib_rxpermission依赖添加没有问题，就可以正常使用了
+
+申请单个权限代码：
+
+    private void requestSingle() {
+    
+        rxPermissions.request(permissionArray)
+                .subscribe(granted -> {
+                    if (granted) { // Always true pre-M
+                        Snackbar.make(layout, "申请权限通过",
+                                Snackbar.LENGTH_SHORT)
+                                .show();
+
+                    } else {
+                        Snackbar.make(layout, "申请权限拒绝",
+                                Snackbar.LENGTH_SHORT)
+                                .show();
+
+                    }
+
+                });
+
+        //等价：
+    //        rxPermissions.request(permissionArray)
+    //                .subscribe(new Consumer<Boolean>() {
+    //                    @Override
+    //                    public void accept(Boolean aBoolean) throws Exception {
+    //
+    //                        if (aBoolean) {
+    //                            Snackbar.make(layout, "申请权限通过",
+    //                                    Snackbar.LENGTH_SHORT)
+    //                                    .show();
+    //                        } else {
+    //                            Snackbar.make(layout, "申请权限拒绝",
+    //                                    Snackbar.LENGTH_SHORT)
+    //                                    .show();
+    //
+    //                        }
+    //                    }
+    //                });
+
+        //等价：
+    //        rxPermissions.requestEach(permissionArray)
+    //                .subscribe(new Consumer<Permission>() {
+    //                    @Override
+    //                    public void accept(Permission permission) throws Exception {
+    //                        if (permission.granted) {
+    //                            Snackbar.make(layout, "申请权限通过",
+    //                                    Snackbar.LENGTH_SHORT)
+    //                                    .show();
+    //                        } else {
+    //                            Snackbar.make(layout, "申请权限拒绝",
+    //                                    Snackbar.LENGTH_SHORT)
+    //                                    .show();
+    //
+    //                        }
+    //                    }
+    //                });
+
+    }
+
+申请多个权限代码：
+
+    /**
+     * RxPermissions同时申请多个权限
+     */
+    private void requestMulti() {
+
+        //
+        rxPermissions.request(permissionArray)//这里填写所需要的权限
+                .subscribe(granted -> {
+                    if (granted) { // Always true pre-M
+                        //当所有权限都允许之后，返回true
+                        Snackbar.make(layout, "所有权限通过",
+                                Snackbar.LENGTH_SHORT)
+                                .show();
+                    } else {
+                        //只要有一个权限禁止，返回false，
+                        // 下一次申请只申请没通过申请的权限
+                        Snackbar.make(layout, "有权限拒绝", Snackbar.LENGTH_SHORT)
+                                .setAction("设置", new View.OnClickListener() {//
+                                    @Override
+                                    public void onClick(View view) {
+                                        //3.申请权限
+
+                                        //如果简单拒绝，可再次申请
+                                        //   requestEach();
+
+                                        //如果 不询问+拒绝，走该处代码（推荐）
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", RxPermissionAct.this.getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivityForResult(intent, REQUEST_MULTI);
+                                    }
+                                })
+                                .show();
+                    }
+
+                });
+    }
+
+
+RxPermissions独有方式：requestEach方式
+
+    /**
+     * 该处处理有问题，拒绝后，一直申请，覆盖重新申请的界面，不太友好
+     */
+    private void requestEach() {
+
+        rxPermissions
+                .requestEach(permissionArray)
+                .subscribe(permission -> { // will emit 2 Permission objects
+                    if (permission.granted) {
+                        //当所有权限都允许之后，返回true
+                        Snackbar.make(layout, "所有权限通过",
+                                Snackbar.LENGTH_SHORT)
+                                .show();
+                    } else if (permission.shouldShowRequestPermissionRationale) {
+                        // Denied permission without ask never again
+                        Snackbar.make(layout, "拒绝不可以使用", Snackbar.LENGTH_SHORT)
+                                .setAction("允许", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        //3.申请权限
+                                        //如果简单拒绝，可再次申请
+                                        //        requestEach();
+
+                                        //如果 不询问+拒绝，走该处代码（推荐）
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", RxPermissionAct.this.getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivityForResult(intent, REQUEST_MULTI_EACH);
+                                    }
+                                })
+                                .show();
+                        requestEach();
+                    } else {
+                        //只要有一个权限禁止，返回false，
+                        // 下一次申请只申请没通过申请的权限
+                        Snackbar.make(layout, "有权限拒绝", Snackbar.LENGTH_SHORT)
+                                .setAction("设置", new View.OnClickListener() {//
+                                    @Override
+                                    public void onClick(View view) {
+                                        //3.申请权限
+
+                                        //如果简单拒绝，可再次申请
+                                        //   requestEach();
+
+                                        //如果 不询问+拒绝，走该处代码（推荐）
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", RxPermissionAct.this.getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivityForResult(intent, REQUEST_MULTI_EACH);
+                                    }
+                                })
+                                .show();
+                    }
+                });
+
+        //等价
+       
+    //        rxPermissions
+        //                .requestEach(permissionArray)
+    //                .subscribe(new Consumer<Permission>() {
+    //                    @Override
+    //                    public void accept(Permission permission) throws Exception {
+    //                        if (permission.granted) {
+    //                            // `permission.name` is granted !
+    //        Snackbar.make(layout, "所有权限通过",
+    //                Snackbar.LENGTH_SHORT)
+    //                .show();
+    //                        } else if (permission.shouldShowRequestPermissionRationale) {
+    //                            // Denied permission without ask never again
+    //        requestEach();
+    //                        } else {
+    //                            // Denied permission with ask never again
+    //                            // Need to go to the settings
+    //        Snackbar.make(layout, "有权限拒绝",
+    //                Snackbar.LENGTH_SHORT)
+    //                .show();
+    //                        }
+    //                    }
+    //                });
+    }
+   
+2-RxPermissions：
+------------------------------------ 

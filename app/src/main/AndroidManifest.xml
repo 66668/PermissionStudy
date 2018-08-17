@@ -755,13 +755,16 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
+    <!--        android:theme="@style/AppTheme"
+-->
     <application
+        android:name=".andpermission_util.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Permission.Theme.Sample">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -794,6 +797,15 @@
         <activity
             android:name=".MyPermissionAct2"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".RxPermissionAct"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".AndPermissionAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/Permission.Theme.Sample.Activity" />
 
     </application>
 

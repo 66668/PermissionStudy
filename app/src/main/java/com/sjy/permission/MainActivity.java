@@ -47,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn_type_2)
     Button btn_type_2;
 
+    //第三方
+    @BindView(R.id.btn_third_1)
+    Button btn_third_1;
+
+    @BindView(R.id.btn_third_2)
+    Button btn_third_2;
+
+
     @BindView(R.id.btn_other)
     Button btn_other;
 
@@ -61,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
         createData();
     }
 
-    @OnClick({R.id.btn_single, R.id.btn_multi, R.id.btn_other, R.id.btn_type_1, R.id.btn_type_2, R.id.btn_setting1, R.id.btn_setting2, R.id.btn_setting3})
+    @OnClick({R.id.btn_single, R.id.btn_multi, R.id.btn_other, R.id.btn_type_1, R.id.btn_type_2, R.id.btn_setting1
+            , R.id.btn_setting2, R.id.btn_setting3, R.id.btn_third_1, R.id.btn_third_2})
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.btn_setting1://权限设置1
@@ -103,9 +112,17 @@ public class MainActivity extends AppCompatActivity {
                 startActForResult(MyPermissionAct2.class, bundle4);
                 break;
 
+            case R.id.btn_third_1://第三方 Rxpermissions
+                Bundle bundle5 = new Bundle();
+                bundle5.putSerializable("bean", (Serializable) lists);
+                startActForResult(RxPermissionAct.class, bundle5);
+                break;
+
+            case R.id.btn_third_2://第三方 Rxpermissions
+                startAct(AndPermissionAct.class);
+                break;
 
             case R.id.btn_other://特殊权限
-
                 startAct(SpecialAct.class);
                 break;
         }

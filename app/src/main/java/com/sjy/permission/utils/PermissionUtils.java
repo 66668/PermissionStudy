@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 /**
- * 手动开启权限 工具类
+ * 开启应用权限设置界面的 工具类
  * <p>
  * 来自csdn:https://blog.csdn.net/donkor_/article/details/79374442
  */

@@ -20,6 +20,8 @@ allprojects {
     repositories {
         google()
         jcenter()
+        //第三方框架rxpermissions：https://github.com/tbruyelle/RxPermissions 2处集成之1
+        maven { url 'https://jitpack.io' }
     }
 }
 
