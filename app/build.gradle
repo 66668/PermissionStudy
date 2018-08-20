@@ -31,22 +31,30 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
     //recyclerview支持
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+
     //使用butterknife注解(正常三步：（1）project/build.gradle（2）module该处添加依赖（3）下载插件android-butterknife-zelezny，然后才能正常使用)
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     //第三方框架rxpermissions：https://github.com/tbruyelle/RxPermissions 2处集成之1
-    implementation project(':lib_rxpermission')//方式1
-//    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'//方式2
-
+    // 方式1
+    implementation project(':lib_rxpermission')
+    //方式2
+    //    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     // RxPermissions要使用的rxjava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
-    //第三方框架AndPermission :
-    implementation 'com.yanzhenjie:permission:2.0.0-rc11'//只有方式1
+    //第三方框架AndPermission 只有方式1
+    implementation 'com.yanzhenjie:permission:2.0.0-rc11'
 
+    //第三方框架 easyPermissions :https://github.com/googlesamples/easypermissions
+    //方式1：使用源码依赖
+    implementation project(':lib_easypermission')
 
+    //方式2：在线库依赖
+//    implementation 'pub.devrel:easypermissions:1.3.0'
 }

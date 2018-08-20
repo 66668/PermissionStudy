@@ -1,1 +1,1 @@
-include ':app', ':lib_rxpermission'
+include ':app', ':lib_rxpermission', ':lib_easypermission'

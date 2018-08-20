@@ -55,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
     Button btn_third_2;
 
 
+    @BindView(R.id.btn_third_3)
+    Button btn_third_3;
+
+
+    @BindView(R.id.btn_third_4)
+    Button btn_third_4;
+
+
     @BindView(R.id.btn_other)
     Button btn_other;
 
@@ -64,13 +72,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.act_main);
         ButterKnife.bind(this);
         createData();
     }
 
     @OnClick({R.id.btn_single, R.id.btn_multi, R.id.btn_other, R.id.btn_type_1, R.id.btn_type_2, R.id.btn_setting1
-            , R.id.btn_setting2, R.id.btn_setting3, R.id.btn_third_1, R.id.btn_third_2})
+            , R.id.btn_setting2, R.id.btn_setting3, R.id.btn_third_1, R.id.btn_third_2, R.id.btn_third_3, R.id.btn_third_4})
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.btn_setting1://权限设置1
@@ -120,6 +128,16 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.btn_third_2://第三方 Rxpermissions
                 startAct(AndPermissionAct.class);
+                break;
+
+            case R.id.btn_third_3://第三方 easyPermissions
+                Bundle bundle6 = new Bundle();
+                bundle6.putSerializable("bean", (Serializable) lists);
+                startAct(EasyPermissionAct.class, bundle6);
+                break;
+
+            case R.id.btn_third_4://第三方 PermissionDispatcher
+                startAct(EasyPermissionAct.class);
                 break;
 
             case R.id.btn_other://特殊权限

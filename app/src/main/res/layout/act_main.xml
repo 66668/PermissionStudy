@@ -107,6 +107,29 @@
 
 
             <Button
+                android:id="@+id/btn_third_3"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:text="第三方框架：easyPermissions"
+                android:textAllCaps="false" />
+
+
+
+            <Button
+                android:id="@+id/btn_third_4"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:text="第三方框架:PermissionDispatcher"
+                android:textAllCaps="false" />
+
+
+            <Button
                 android:id="@+id/btn_other"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"

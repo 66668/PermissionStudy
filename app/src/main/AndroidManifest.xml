@@ -803,6 +803,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".EasyPermissionAct"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".AndPermissionAct"
             android:screenOrientation="portrait"
             android:theme="@style/Permission.Theme.Sample.Activity" />

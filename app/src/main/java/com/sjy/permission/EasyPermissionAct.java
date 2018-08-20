@@ -1,5 +1,6 @@
 package com.sjy.permission;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -18,7 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sjy.permission.type1.BaseAct;
 import com.sjy.permission.utils.DataBean;
 
 import java.io.Serializable;
@@ -28,11 +28,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * 原生代码 多权限设置
+ * 第三方框架  easyPermissions:https://github.com/googlesamples/easypermissions
  */
-public class MultiAct extends AppCompatActivity {
+public class EasyPermissionAct extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
     //=======================================================
     @BindView(R.id.layout)
     RelativeLayout layout;
@@ -43,10 +46,15 @@ public class MultiAct extends AppCompatActivity {
     @BindView(R.id.btn_multi_select)
     Button btn_multi_select;
 
-    @BindView(R.id.btn_multi_apply)
-    Button btn_multi_apply;
+    @BindView(R.id.btn_1)
+    Button btn_1;
+
+    @BindView(R.id.btn_2)
+    Button btn_2;
+
     //=======================================================
 
+    private static final int REQUEST_CODE_SINGLE = 114;
     private static final int REQUEST_CODE_MULTI = 115;
     private static final int REQUEST_SECOND_OPEN = 125;//永久拒绝的手动打开设置
 
@@ -59,12 +67,12 @@ public class MultiAct extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_multi);
+        setContentView(R.layout.act_easypermission);
         ButterKnife.bind(this);
         getIntentData();
     }
 
-    @OnClick({R.id.btn_multi_select, R.id.btn_multi_apply})
+    @OnClick({R.id.btn_multi_select, R.id.btn_1, R.id.btn_2})
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.btn_multi_select://选择权限
@@ -77,13 +85,28 @@ public class MultiAct extends AppCompatActivity {
                 startActForResult(MultiSelectAct.class, bundle);
                 break;
 
-            case R.id.btn_multi_apply://申请
+            case R.id.btn_1://单个权限
                 //
                 if (selectList == null || selectList.size() <= 0) {
                     Toast.makeText(this, "请选择权限", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                applyPermissions();
+                if (selectList.size() == 1) {
+                    applySinglePermission();
+                } else {
+                    Toast.makeText(this, "请选择一个权限", Toast.LENGTH_SHORT).show();
+                }
+
+
+                break;
+            case R.id.btn_2://多个权限
+                //
+                if (selectList == null || selectList.size() <= 0) {
+                    Toast.makeText(this, "请选择权限", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                applyMultiPermission();
+
                 break;
         }
 
@@ -98,10 +121,13 @@ public class MultiAct extends AppCompatActivity {
                     getSelectData(data);
                 }
                 break;
-            case REQUEST_SECOND_OPEN://永久拒绝后，手动打开权限的返回处理
-                //3.再次申请
-                ActivityCompat.requestPermissions(MultiAct.this, permissionArray, REQUEST_CODE_MULTI);
-
+            default:
+                if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+                    // Do something after user returned from app settings screen, like showing a Toast.
+                    Snackbar.make(layout, "手动设置返回处理！",
+                            Snackbar.LENGTH_SHORT)
+                            .show();
+                }
                 break;
         }
     }
@@ -118,54 +144,51 @@ public class MultiAct extends AppCompatActivity {
     //=========================权限相关的代码==============================
 
 
-    private void applyPermissions() {
-
-        //1.判断sdk 和targetsdk是否满足
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && this.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.M) {
-            //1.判断是否需要申请权限()
-            boolean isCheck = false;
-            for (int i = 0; i < permissionArray.length; i++) {
-                isCheck = (ContextCompat.checkSelfPermission(this, permissionArray[i]) != PackageManager.PERMISSION_GRANTED) || isCheck;
-            }
-            if (isCheck) {
-                //2.是否需要向用户解释为何申请权限(一般需要全部判断，本处测试写一个)
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionArray[0])) {
-                    //解释为何申请权限的代码
-                    Snackbar.make(layout, "该功能需要使用权限（自定义）",
-                            Snackbar.LENGTH_INDEFINITE)
-                            .setAction("允许", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    //3.申请权限
-                                    ActivityCompat.requestPermissions(MultiAct.this, permissionArray, REQUEST_CODE_MULTI);
-                                }
-                            })
-                            .show();
-                } else {
-                    //3.申请权限
-                    ActivityCompat.requestPermissions(MultiAct.this, permissionArray, REQUEST_CODE_MULTI);
-                }
-            } else {
-                //已申请
-                Toast.makeText(this, "权限已经申请，可以使用功能", Toast.LENGTH_LONG).show();
-                for (DataBean bean : selectList) {
-                    for (DataBean item : lists) {
-                        if (item.getPermission().equals(bean.getPermission())) {
-                            item.setUsed(true);
-                        }
-                    }
-                }
-            }
-
+    /**
+     * 单个权限申请
+     */
+    @AfterPermissionGranted(REQUEST_CODE_SINGLE)//可选项
+    private void applySinglePermission() {
+        if (hasCameraPermission()) {
+            //权限申请 通过的处理
+            Snackbar.make(layout, "权限通过，可使用功能",
+                    Snackbar.LENGTH_SHORT)
+                    .show();
         } else {
-            Toast.makeText(this, "sdk小于android5.0,不需要申请权限", Toast.LENGTH_LONG).show();
+            // 申请权限
+            EasyPermissions.requestPermissions(
+                    this,
+                    "app需要使用权限！（自定义）",
+                    REQUEST_CODE_SINGLE,
+                    permissionArray);
         }
-
 
     }
 
     /**
-     * 04
+     * 多个权限申请
+     */
+    @AfterPermissionGranted(REQUEST_CODE_MULTI)
+    private void applyMultiPermission() {
+
+        if (hasCameraPermission()) {
+            // Have permissions, do the thing!
+            //权限申请 通过的处理
+            Snackbar.make(layout, "所有权限都通过，可使用功能",
+                    Snackbar.LENGTH_SHORT)
+                    .show();
+        } else {
+            // Ask for both permissions
+            EasyPermissions.requestPermissions(
+                    this,
+                    "app需要使用多个权限！（自定义）",
+                    REQUEST_CODE_MULTI,
+                    permissionArray);
+        }
+    }
+
+    /**
+     * 02
      *
      * @param requestCode
      * @param permissions  多个权限的数组
@@ -175,62 +198,74 @@ public class MultiAct extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        //onRequestPermissionsResult的回调 发送给库处理,this是 act implements EasyPermissions.PermissionCallbacks
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    private boolean hasCameraPermission() {
+        return EasyPermissions.hasPermissions(this, permissionArray);
+    }
+
+    /**
+     * EasyPermissions.PermissionCallbacks实现 通过
+     *
+     * @param requestCode
+     * @param perms
+     */
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
         switch (requestCode) {
+            case REQUEST_CODE_SINGLE:
+                Snackbar.make(layout, "单个权限通过",
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+                break;
             case REQUEST_CODE_MULTI:
-                boolean isGranted = true;
-                StringBuilder builder = new StringBuilder();
-                deniedArray = new String[grantResults.length];
-                for (int i = 0; i < grantResults.length; i++) {
-                    if (grantResults[i] < 0) {
-                        isGranted = false;
-                        builder.append(permissions[i]);
-                        builder.append(" ");
-                        deniedArray[i] = permissions[i];
-                    }
-                }
+                Snackbar.make(layout, "多个权限通过",
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+                break;
 
-                if (isGranted) {
-                    //多个权限申请 通过的处理
-                    Snackbar.make(layout, "申请权限通过",
-                            Snackbar.LENGTH_SHORT)
-                            .show();
-                    //可以执行功能了
-                    for (DataBean item : selectList) {
-                        for (DataBean bean : lists) {
-                            if (item.getPermission().equals(bean.getPermission())) {
-                                bean.setUsed(true);
-                            }
-                        }
-
-                    }
-
-                } else {
-                    //权限申请拒绝的处理
-                    Snackbar.make(layout, "权限" + builder.toString() + "被拒绝！", Snackbar.LENGTH_SHORT)
-                            .setAction("设置", new View.OnClickListener() {//TODO
-                                @Override
-                                public void onClick(View view) {
-
-                                    //不询问，直接打开设置界面
-                                    boolean isReqest = false;
-                                    for (int i = 0; i < deniedArray.length; i++) {
-                                        isReqest = (!ActivityCompat.shouldShowRequestPermissionRationale(MultiAct.this, deniedArray[0])) || isReqest;
-                                    }
-                                    if (isReqest) {
-                                        //3.手动打开权限
-                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                        Uri uri = Uri.fromParts("package", MultiAct.this.getPackageName(), null);
-                                        intent.setData(uri);
-                                        startActivityForResult(intent, REQUEST_SECOND_OPEN);
-                                    }
-                                }
-                            })
-                            .show();
-                }
-
+            default:
+                Snackbar.make(layout, "default--requestCode=" + requestCode,
+                        Snackbar.LENGTH_SHORT)
+                        .show();
                 break;
         }
 
+    }
+
+    /**
+     * EasyPermissions.PermissionCallbacks实现 拒绝权限
+     *
+     * @param requestCode
+     * @param perms
+     */
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        switch (requestCode) {
+            case REQUEST_CODE_SINGLE:
+
+                //跳转设置 手动打开权限
+                if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+                    new AppSettingsDialog.Builder(this).build().show();
+                }
+
+                break;
+            case REQUEST_CODE_MULTI:
+                //跳转设置 手动打开权限
+                if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+                    new AppSettingsDialog.Builder(this).build().show();
+                }
+                break;
+
+            default:
+                Snackbar.make(layout, "default--requestCode=" + requestCode,
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+                break;
+        }
     }
 
     // =========================private==============================
@@ -294,4 +329,5 @@ public class MultiAct extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivityForResult(intent, 101);
     }
+
 }

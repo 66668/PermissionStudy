@@ -48,7 +48,8 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by Yan Zhenjie on 2016/9/17.
+ * AndPermission：https://github.com/yanzhenjie/AndPermission
+ *
  */
 public class AndPermissionAct extends AppCompatActivity implements View.OnClickListener {
 

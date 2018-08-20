@@ -36,7 +36,7 @@ public class BaseAct extends AppCompatActivity {
         //1.判断sdk 和targetsdk是否满足
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && this.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.M) {
 
-            //2.判断是否需要申请权限(一般需要全部判断，本处测试写一个)
+            //2.判断是否需要申请权限()
             boolean isCheck = false;
             for (int i = 0; i < permissions.length; i++) {
                 isCheck = (ContextCompat.checkSelfPermission(this, permissions[i]) != PackageManager.PERMISSION_GRANTED) || isCheck;

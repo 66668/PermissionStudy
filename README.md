@@ -1123,9 +1123,19 @@ baseAct的封装如下：
      
          
 () 第三方框架使用
-------------------------------------
+-------------------
+各个框架评价：
+-----------------
 
-1-RxPermissions（Rxjava2）：
+对RxPermissions使用评价：相对于baseAct集成，RxPermissions没有更好的拒绝处理，和原生的方式没有任何区别，只是用rxjava代替了act中重写的
+onRequestPermissionsResult（）。
+
+AndPermission，最简单的方式就是直接使用implementation 'com.yanzhenjie:permission:2.0.0-rc11'，由于高度集成，已经不支持lib源码方式，而且使用的style也在
+依赖中，没法查看，比较恶心，不推荐深度使用，就当看画了。
+
+easypermissions相对于RxPermission,好的一点就是 ,拒绝后有弹窗提示，并且勾选+拒绝的打开设置的代码可以调用，封装的很好，但不如BaseAct集成方便，因为代码仍然要处理onRequestPermissionsResult和onActivityResul的重写处理
+
+1-RxPermissions（Rxjava2）（不推荐使用）：https://github.com/tbruyelle/RxPermissions
 ------------------------------------ 
 github--https://github.com/tbruyelle/RxPermissions
 
@@ -1353,9 +1363,159 @@ RxPermissions独有方式：requestEach方式
     }
    
    
-2-AndPermission：https://github.com/yanzhenjie/AndPermission
+2-AndPermission（不推荐使用）：https://github.com/yanzhenjie/AndPermission
 ------------------------------------ 
-AndPermission，最简单的方式就是直接使用implementation 'com.yanzhenjie:permission:2.0.0-rc11'，由于高度集成，已经不支持lib源码方式，而且使用的stle也在
+AndPermission，最简单的方式就是直接使用implementation 'com.yanzhenjie:permission:2.0.0-rc11'，由于高度集成，已经不支持lib源码方式，而且使用的style也在
 依赖中，没法查看，比较恶心，不推荐深度使用，就当看画了。
 
 示例demo在AndPermissionAct中，参考就可以
+集成步骤：
+(1) app/build.gradle添加依赖：
+
+    dependencies {
+        //第三方框架AndPermission :
+        implementation 'com.yanzhenjie:permission:2.0.0-rc11'//只有方式1
+    }
+    
+(2) 拷贝代码,见本app的包路径：com.sjy.permission.andpermission_util
+
+(3) res的配置：
+
+layout/window_launcher.xml
+
+values/arrat_string.xml
+
+values/dimens.xml
+
+values/strings.xml
+
+values/styles.xml
+
+(4)代码调用见AndPermissionAct
+
+
+3-easypermissions（推荐使用） :https://github.com/googlesamples/easypermissions 
+------------------------------------
+
+
+easypermissions相对于RxPermission,好的一点就是 ,拒绝后有弹窗提示，并且勾选+拒绝的打开设置的代码可以调用，封装的很好，但不如BaseAct集成方便，
+因为代码仍然要处理onRequestPermissionsResult和onActivityResul的重写处理
+
+
+
+集成步骤：
+（1）有两种集成，一种使用lib,一种使用在线库，app/build.gradle添加依赖：
+
+    dependencies {
+           //第三方框架 easyPermissions :https://github.com/googlesamples/easypermissions
+           //方式1：使用源码依赖
+           implementation project(':lib_easypermission')
+       
+           //方式2：在线库依赖
+       //    implementation 'pub.devrel:easypermissions:1.3.0'
+    }
+（2）示例代码见EasyPermissionAct和EasyPermissisonFragment
+
+（2-1）权限调用：点击按钮调用 applySinglePermission()方法（单个，多个，fragment的申请方式都一样，都是如下步骤）
+
+    /**
+     * 单个权限申请
+     */
+    @AfterPermissionGranted(REQUEST_CODE_SINGLE)//可选项
+    private void applySinglePermission() {
+        if (hasCameraPermission()) {
+            //权限申请 通过的处理
+            Snackbar.make(layout, "权限通过，可使用功能",
+                    Snackbar.LENGTH_SHORT)
+                    .show();
+        } else {
+            // 申请权限
+            EasyPermissions.requestPermissions(
+                    this,
+                    "app需要使用权限！（自定义）",
+                    REQUEST_CODE_SINGLE,
+                    permissionArray);
+        }
+
+    }
+    
+    private boolean hasCameraPermission() {
+        return EasyPermissions.hasPermissions(this, permissionArray);
+    }
+
+（2-2）重写onRequestPermissionsResult方法，将处理交给EasyPermissions处理：
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        //onRequestPermissionsResult的回调 发送给库处理,this是 act implements EasyPermissions.PermissionCallbacks
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+    
+（2-3）需要实现回调：implements EasyPermissions.PermissionCallbacks：
+
+    /**
+     * EasyPermissions.PermissionCallbacks实现 通过
+     *
+     * @param requestCode
+     * @param perms
+     */
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        switch (requestCode) {
+            case REQUEST_CODE_SINGLE:
+                Snackbar.make(layout, "单个权限通过",
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+                break;
+
+            default:
+                Snackbar.make(layout, "default--requestCode=" + requestCode,
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+                break;
+        }
+
+    }
+
+    /**
+     * EasyPermissions.PermissionCallbacks实现 拒绝权限
+     *
+     * @param requestCode
+     * @param perms
+     */
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        switch (requestCode) {
+            case REQUEST_CODE_SINGLE:
+
+                //跳转设置 手动打开权限
+                if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+                    new AppSettingsDialog.Builder(this).build().show();
+                }
+
+                break;
+
+            default:
+                Snackbar.make(layout, "default--requestCode=" + requestCode,
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+                break;
+        }
+    }
+
+（2-4）如果用户 勾选询问+拒绝，则会触发EasyPermissions的打开设置界面：new AppSettingsDialog.Builder(this).build().show();然后回调onActivityResult方法处理返回：
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+      
+         if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            // Do something after user returned from app settings screen, like showing a Toast.
+             Snackbar.make(layout, "手动设置返回处理！",
+                            Snackbar.LENGTH_SHORT)
+                            .show();
+         }
+     
+    }
