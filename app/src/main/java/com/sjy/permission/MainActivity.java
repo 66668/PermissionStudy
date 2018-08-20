@@ -2,10 +2,12 @@ package com.sjy.permission;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.sjy.permission.utils.DataBean;
 import com.sjy.permission.utils.DataUtils;
@@ -137,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.btn_third_4://第三方 PermissionDispatcher
-                startAct(EasyPermissionAct.class);
+//                startAct(EasyPermissionAct.class);
+                Toast.makeText(this, "别瞅了，没做", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.btn_other://特殊权限
