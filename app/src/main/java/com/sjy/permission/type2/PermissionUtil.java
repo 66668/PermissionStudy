@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * 动态权限工具类
+ * 参考：https://github.com/dfqin/PermissionGrantor
  * Created by dway on 2017/1/13.
  */
 public class PermissionUtil {
