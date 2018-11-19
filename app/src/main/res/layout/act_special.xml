@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:padding="8dp"
+        android:text="(1)SYSTEM_ALERT_WINDOW：一个设备使用双屏或多屏的特定设备，由Presentation类具体操作，Presentation类在android4.2之后就支持。想了解更多，请搜索'双屏异显'。\n
+WRITE_SETTINGS："
+        android:layout_height="wrap_content" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,7 +29,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:text="设置悬浮窗:SYSTEM_ALERT_WINDOW" />
+                android:text="双屏异显:SYSTEM_ALERT_WINDOW" />
 
             <Button
                 android:id="@+id/btn_special2"
@@ -39,4 +45,4 @@
     </ScrollView>
 
 
-</RelativeLayout>
+</LinearLayout>

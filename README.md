@@ -1522,3 +1522,37 @@ easypermissions相对于RxPermission,好的一点就是 ,拒绝后有弹窗提�
     
 4-PermissionDispatcher（未做） :https://github.com/permissions-dispatcher/PermissionsDispatcher
 ------------------------------------
+
+
+#常见关于权限的异常处理：
+ActivityNotFoundException: No Activity found to handle Intent
+
+解决方法：加try/catch
+eg:有的手机在点击第一个"查看权限设置"item时提示异常：ActivityNotFoundException: No Activity found to handle Intent，则在对应的startActivity(intenent)补充异常处理即可。
+
+  
+     /**
+     * 小米
+     */
+    private void goXiaoMiMainager() {
+        try {
+            String rom = getMiuiVersion();
+            Intent intent = new Intent();
+            if ("V6".equals(rom) || "V7".equals(rom)) {
+                intent.setAction("miui.intent.action.APP_PERM_EDITOR");
+                intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
+                intent.putExtra("extra_pkgname", packageName);
+            } else if ("V8".equals(rom) || "V9".equals(rom)) {
+                intent.setAction("miui.intent.action.APP_PERM_EDITOR");
+                intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.PermissionsEditorActivity");
+                intent.putExtra("extra_pkgname", packageName);
+            } else {
+                goIntentSetting();
+            }
+            mContext.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            e.getMessage();
+            Log.e("SJY", e.toString());
+        }
+
+    }

@@ -2,7 +2,6 @@ package com.sjy.permission;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.btn_setting1://权限设置1
-                new PermissionUtils(this).goPermissionSettings();//方式1
+                new PermissionUtils(MainActivity.this).goPermissionSettings();//方式1
                 // new PermissionUtils(this).goIntentSetting();//方式2
 
                 break;

@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sjy.permission.utils.DataBean;
-import com.sjy.permission.utils.PermissionUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -151,20 +151,26 @@ public class PermissionUtils {
      * 小米
      */
     private void goXiaoMiMainager() {
-        String rom = getMiuiVersion();
-        Intent intent = new Intent();
-        if ("V6".equals(rom) || "V7".equals(rom)) {
-            intent.setAction("miui.intent.action.APP_PERM_EDITOR");
-            intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
-            intent.putExtra("extra_pkgname", packageName);
-        } else if ("V8".equals(rom) || "V9".equals(rom)) {
-            intent.setAction("miui.intent.action.APP_PERM_EDITOR");
-            intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.PermissionsEditorActivity");
-            intent.putExtra("extra_pkgname", packageName);
-        } else {
-            goIntentSetting();
+        try {
+            String rom = getMiuiVersion();
+            Intent intent = new Intent();
+            if ("V6".equals(rom) || "V7".equals(rom)) {
+                intent.setAction("miui.intent.action.APP_PERM_EDITOR");
+                intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
+                intent.putExtra("extra_pkgname", packageName);
+            } else if ("V8".equals(rom) || "V9".equals(rom)) {
+                intent.setAction("miui.intent.action.APP_PERM_EDITOR");
+                intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.PermissionsEditorActivity");
+                intent.putExtra("extra_pkgname", packageName);
+            } else {
+                goIntentSetting();
+            }
+            mContext.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            e.getMessage();
+            Log.e("SJY", e.toString());
         }
-        mContext.startActivity(intent);
+
     }
 
     /**

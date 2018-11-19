@@ -611,8 +611,8 @@
     <!--142写入或修改订阅内容的数据库-->
     <uses-permission android:name="android.permission.SUBSCRIBED_FEEDS_WRITE" />
 
-    <!--TODO 显示系统窗口-->
-    <!--143 显示系统窗口-->
+    <!--TODO 双屏异显，需要申请-->
+    <!--143 双屏异显-->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
 
@@ -703,6 +703,92 @@
 
     <!--164 写语音邮件-->
     <uses-permission android:name="android.permission.WRITE_VOICEMAIL" />
+
+
+    <!--====================================android6.0（api23）新增权限统计====================================-->
+
+    <!--*******************level 23-> 12个******************-->
+
+    <!--(01)希望访问通知策略的应用程序的标记权限。-->
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <!--api 22添加 api23弃用-->
+    <uses-permission
+        android:name="android.permission.BIND_CARRIER_MESSAGING_SERVICE"
+        tools:ignore="ProtectedPermissions" />
+    <!--(02允许绑定到运营商应用程序中的服务的系统进程将具有此权限。运营商应用程序应该使用这个权限来保护他们的服务，只系统允许绑定这些服务。)-->
+    <uses-permission android:name="android.permission.BIND_CARRIER_SERVICES" />
+    <!--（03）ChooserTargetService-->
+    <uses-permission android:name="android.permission.BIND_CHOOSER_TARGET_SERVICE" />
+    <!--（04）InCallService-->
+    <uses-permission android:name="android.permission.BIND_INCALL_SERVICE" />
+    <!--（05）MidiDeviceService-->
+    <uses-permission android:name="android.permission.BIND_MIDI_DEVICE_SERVICE" />
+    <!--（06）ConnectionService-->
+    <uses-permission android:name="android.permission.BIND_TELECOM_CONNECTION_SERVICE" />
+    <!--（07）允许访问帐户服务中的帐户列表-->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS_PRIVILEGED" />
+    <!--（08）允许应用程序收集组件使用统计信息.声明权限意味着打算使用API，设备的用户可以通过设置应用程序授予权限。-->
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
+    <!--（09）应用程序必须具有使用Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS的权限。这是一个正常的权限:请求它的应用程序将总是被授予权限，而用户不需要批准或查看它。-->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <!--（10）允许应用程序请求安装包。api>25的应用程序必须持有此权限才能使用Intent.ACTION_INSTALL_PACKAGE-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!--api28弃用-->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <!-- （11）如果应用程序以API级别23或更高为目标，应用程序用户必须通过权限管理屏幕显式地向应用程序授予此权限。应用程序通过发送一个intent和action settings来请求用户的批准。应用程序可以通过调用Settings.System.canWrite()来检查它是否具有此授权。" />
+-->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!--（12）从Android 6.0 (API level 23)开始，如果应用程序共享管理帐户的身份验证者的签名，那么它不需要“GET_ACCOUNTS”权限来读取该帐户的信息。在Android 5.1及以下版本中，所有应用程序都需要“GET_ACCOUNTS”权限才能读取任何帐户的信息。-->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+
+    <!--*******************level 24-> 4个******************-->
+    <!--(01)允许应用程序绑定到第三方快速设置块。仅由系统请求-->
+    <uses-permission android:name="android.permission.BIND_QUICK_SETTINGS_TILE" />
+    <!--(02)CallScreeningService调用-->
+    <uses-permission android:name="android.permission.BIND_SCREENING_SERVICE" />
+    <!--(03)VrListenerService-->
+    <uses-permission android:name="android.permission.BIND_VR_LISTENER_SERVICE" />
+    <!--(04)ConditionProviderService-->
+    <uses-permission android:name="android.permission.BIND_CONDITION_PROVIDER_SERVICE" />
+
+    <!--*******************level 26-> 9个******************-->
+
+    <!--（01）允许应用接听来电 危险权限-->
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
+
+    <!-- （02）AutofillService启动，才可以绑定这个权限-->
+    <uses-permission android:name="android.permission.BIND_AUTOFILL_SERVICE" />
+
+    <!--（03） VisualVoicemailService调用-->
+    <uses-permission android:name="android.permission.BIND_VISUAL_VOICEMAIL_SERVICE" />
+    <!--（04）允许即时应用程序创建前台服务。-->
+    <uses-permission android:name="android.permission.INSTANT_APP_FOREGROUND_SERVICE" />
+    <!--（05）允许调用应用程序通过自管理的ConnectionService api管理自己的调用-->
+    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
+    <!--（06）允许读取设备的电话号码。这是READ_PHONE_STATE授予的功能的子集，但是公开给即时应用程序。-->
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <!--（07）允许伴侣应用程序在后台运行-->
+    <uses-permission android:name="android.permission.REQUEST_COMPANION_RUN_IN_BACKGROUND" />
+    <!--（08）允许伴侣应用程序在后台使用data-->
+    <uses-permission android:name="android.permission.REQUEST_COMPANION_USE_DATA_IN_BACKGROUND" />
+    <!--（09）允许应用程序请求删除包,Build.VERSION_CODES.P以上或持有该权限调用Intent.ACTION_UNINSTALL_PACKAGE or PackageInstaller.uninstall(VersionedPackage, IntentSender-->
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+
+    <!--*******************level 28-> 4个******************-->
+
+    <!--(01)允许调用应用程序继续在另一个应用程序中启动的调用。例如，视频调用应用程序希望在用户的移动网络上继续语音调用。
+当调用从一个应用程序切换到另一个应用程序时，涉及到切换的有两个设备;启动和接收装置。发起设备是呼叫切换请求开始的地方，接收设备是另一方确认切换请求的地方。
+此权限保护对交接方使用TelecomManager.acceptHandover(Uri, int, PhoneAccountHandle)接受交接。-->
+    <uses-permission android:name="android.permission.ACCEPT_HANDOVER" />
+    <!--(02)允许普通应用程序使用Service.startForeground-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!--(03)允许应用程序接收NFC事务事件。-->
+    <uses-permission android:name="android.permission.NFC_TRANSACTION_EVENT" />
+    <!--(04)允许应用程序使用设备支持的生物识别模式。-->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <!--TODO api 28移除-->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
 
     <!--====================================9个危险权限组====================================-->
