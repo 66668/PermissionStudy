@@ -859,6 +859,102 @@
     
         }
 
+所以完整步骤如下：
+
+    /**
+     * googledemo推荐的方法
+     */
+    private void applyPermission() {
+
+        //大于android 6.0才可以申请权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && this.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.M) {
+            Log.d("SJY", "判断=" + ContextCompat.checkSelfPermission(this, permissionStr));
+            //1.判断是否需要申请权限
+            if (ContextCompat.checkSelfPermission(this, permissionStr) != PackageManager.PERMISSION_GRANTED) {
+
+                //2.是否需要向用户解释为何申请权限
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionStr)) {
+
+                    //解释为何申请权限的代码
+                    Snackbar.make(layout, "该功能需要使用权限（自定义）",
+                            Snackbar.LENGTH_INDEFINITE)
+                            .setAction("允许", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    //3.申请权限
+                                    ActivityCompat.requestPermissions(SingleAct.this, new String[]{permissionStr}, REQUEST_CODE_SIGNLE);
+                                }
+                            })
+                            .show();
+                } else {
+                    //3.申请权限
+                    ActivityCompat.requestPermissions(SingleAct.this, new String[]{permissionStr}, REQUEST_CODE_SIGNLE);
+                }
+
+            } else {
+                //已申请
+                Toast.makeText(this, permissionStr + "权限已经申请，可以使用功能", Toast.LENGTH_LONG).show();
+                for (DataBean item : lists) {
+                    if (item.getPermission().equals(bean.getPermission())) {
+                        item.setUsed(true);
+                    }
+                }
+
+            }
+
+        } else {//直接使用该功能
+            Toast.makeText(this, "sdk小于android5.0,不需要申请权限", Toast.LENGTH_LONG).show();
+        }
+
+    }
+    /**
+     * 04
+     *
+     * @param requestCode
+     * @param permissions  多个权限的数组
+     * @param grantResults 多个权限结果数组，通过的是0，不通过的是-1
+     */
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_SIGNLE:
+                //单个权限申请 通过的处理
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        Snackbar.make(layout, "申请权限通过",
+                                Snackbar.LENGTH_SHORT)
+                                .show();
+
+                        //可以执行功能了
+                        for (DataBean item : lists) {
+                            if (item.getPermission().equals(bean.getPermission())) {
+                                item.setUsed(true);
+                            }
+                        }
+
+                    } else {
+                    //单个权限申请拒绝的处理
+                    Snackbar.make(layout, "申请权限拒绝！", Snackbar.LENGTH_SHORT)
+                            .setAction("设置", new View.OnClickListener() {//TODO
+                                @Override
+                                public void onClick(View view) {
+                                    if (!ActivityCompat.shouldShowRequestPermissionRationale(SingleAct.this, permissions[0])) {
+                                        //3.申请权限
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", SingleAct.this.getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivityForResult(intent, REQUEST_SECOND_OPEN);
+                                    }
+                                }
+                            })
+                            .show();
+
+                }
+
+                break;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }    
 
 
 (四) 多个权限申请的方法（MultiAct）
