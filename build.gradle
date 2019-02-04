@@ -7,6 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
+        //请基于该3.2.1版本测试，api27+的包变动大，编译环境不适应
         classpath 'com.android.tools.build:gradle:3.2.1'
         //使用butterknife注解(正常三步：（1）project/build.gradle（2）module该处添加依赖（3）下载插件android-butterknife-zelezny，然后才能正常使用)
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
